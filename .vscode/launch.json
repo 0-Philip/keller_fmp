@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dart_mac_backend_draft",
+            "cwd": "dart_mac_backend_draft",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "windows_console_interaction_test",
+            "cwd": "windows_console_interaction_test",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "a2i2",
+            "cwd": "a2i2_frontend/a2i2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "a2i2 (profile mode)",
+            "cwd": "a2i2_frontend/a2i2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "a2i2 (release mode)",
+            "cwd": "a2i2_frontend/a2i2",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

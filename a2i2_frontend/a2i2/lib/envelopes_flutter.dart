@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:a2i2/parse_fields.dart';
 import 'package:a2i2/scripts_f.dart';
 import 'package:flutter/widgets.dart';
 
@@ -72,13 +73,22 @@ class EnvelopeForFlutter {
 
   String? subject;
 
-  String? _to;
+  String? _rawTo;
+
   String? get to {
-    return _to;
+    return _rawTo;
+  }
+
+  List<String> get toRecipients {
+    if (_rawTo != null) {
+      return parseField(_rawTo!);
+    } else {
+      return [];
+    }
   }
 
   void set to(String? to) {
-    _to = to?.trim();
+    _rawTo = to;
   }
 
   String? _cc;
@@ -100,7 +110,7 @@ class EnvelopeForFlutter {
     if (to != null && subject != null) {
       var sendCommand = sendEmail(
         senderID: EnvelopeForFlutter.senderId!,
-        toRecipient: to!,
+        toRecipients: toRecipients,
         subject: subject!,
         ccRecipient: cc,
         bccRecipient: bcc,

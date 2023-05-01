@@ -70,7 +70,7 @@ String closeWindow(String fileName, String workingDirectory) => '''
 
 String sendEmail({
   required String senderID,
-  required String toRecipient,
+  required List<String> toRecipients,
   required String subject,
   String? ccRecipient,
   String? bccRecipient,
@@ -81,8 +81,8 @@ String sendEmail({
 tell application "Mail"
 		set outgoingMessage to make new outgoing message with properties {visible:false}
 		tell outgoingMessage
-			make new to recipient at end of to recipients with properties {address: "$toRecipient"}
-			${ccRecipient != null ? 'make new cc recipient at end of cc recipients with properties {address:"$ccRecipient"}' : ' '}
+			${addToRecipients(toRecipients)}
+      ${ccRecipient != null ? 'make new cc recipient at end of cc recipients with properties {address:"$ccRecipient"}' : ' '}
 			${bccRecipient != null ? 'make new bcc recipient at end of bcc recipients with properties {address:"$bccRecipient"}' : ' '}
 			set sender to "$senderID"
 			set subject to "$subject"
@@ -94,6 +94,15 @@ tell application "Mail"
 
 ''';
 
+String addToRecipients(List<String> toRecipients) {
+  String code = "";
+  for (var recipient in toRecipients) {
+    code +=
+        '''make new to recipient at end of to recipients with properties {address: "$recipient"} \n''';
+  }
+  return code;
+}
+
 String addAttachments(List<String> attachmentPaths) {
   String code = "tell outgoingMessage";
   for (var path in attachmentPaths) {
@@ -102,4 +111,11 @@ String addAttachments(List<String> attachmentPaths) {
   }
   code += " \nend tell";
   return code;
+}
+
+void main() {
+  print(sendEmail(
+      senderID: "Philip",
+      toRecipients: ["philipugk@gmail.com", "philip@testmail.com"],
+      subject: "seeing if this works"));
 }

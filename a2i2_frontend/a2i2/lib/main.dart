@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 import 'a2i2_serial.dart';
 import 'envelopes_flutter.dart';
-import 'package:dcdg/dcdg.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

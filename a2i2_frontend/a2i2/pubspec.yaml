@@ -48,7 +48,7 @@ dependencies:
 flutter_icons:
   macos:
     generate: true
-    image_path: "./mm_icon_v2-2.png" 
+    image_path: "./mm_new_icon.png" 
   
 
 dev_dependencies:

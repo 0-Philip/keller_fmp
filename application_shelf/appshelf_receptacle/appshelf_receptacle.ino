@@ -48,7 +48,7 @@ void loop() {
             break;
         }
         case SimpleRfid::tokenRemoved: {
-            auto currentToken{selectTokenById(rfid.getFirstUidByte())};
+            auto currentToken{selectTokenById2(rfid.getFirstUidByte(), apps)};
             if (currentToken) currentToken->tokenUninserted();
             break;
         }

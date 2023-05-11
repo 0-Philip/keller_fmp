@@ -17,8 +17,6 @@ SimpleRfid rfid{chipSelect, reset};
 
 vector<AppToken> apps;
 
-AppToken testApp{0xCC};
-
 void setup() {
     Serial.begin(9600);
     beginEspNowAsReceiver(OnDataReceive);
@@ -32,11 +30,7 @@ void loop() {
 
     switch (rfid.getTokenPresence()) {
         case SimpleRfid::tokenAdded: {
-            // auto currentToken{selectTokenById(rfid.getFirstUidByte())};
-            // if (currentToken) currentToken->tokenInserted();
-
-            // break;
-            auto currentToken{selectTokenById2(rfid.getFirstUidByte(), apps)};
+            auto currentToken{selectTokenById(rfid.getFirstUidByte(), apps)};
             if (currentToken) {
                 currentToken->tokenInserted();
             } else {
@@ -48,7 +42,7 @@ void loop() {
             break;
         }
         case SimpleRfid::tokenRemoved: {
-            auto currentToken{selectTokenById2(rfid.getFirstUidByte(), apps)};
+            auto currentToken{selectTokenById(rfid.getFirstUidByte(), apps)};
             if (currentToken) currentToken->tokenUninserted();
             break;
         }
@@ -57,15 +51,9 @@ void loop() {
     }
 }
 
-AppToken* const selectTokenById(byte id) {
-    static AppToken tokens[]{};
-    for (auto& token : tokens) {
-        if (token.matches(id)) return &token;
-    }
-    return nullptr;
-}
 
-AppToken* selectTokenById2(byte id, vector<AppToken>& apps) {
+
+AppToken* selectTokenById(byte id, vector<AppToken>& apps) {
     for (auto& token : apps) {
         if (token.matches(id)) return &token;
     }
@@ -74,7 +62,7 @@ AppToken* selectTokenById2(byte id, vector<AppToken>& apps) {
 
 void OnDataReceive(byte* macAddress, byte* incomingData, byte length) {
     if (length >= 2) {
-        auto currentToken{selectTokenById2(incomingData[0], apps)};
+        auto currentToken{selectTokenById(incomingData[0], apps)};
         if (!currentToken) {
             AppToken newApp{incomingData[0]};
             apps.push_back(newApp);
@@ -100,6 +88,8 @@ void OnDataReceive(byte* macAddress, byte* incomingData, byte length) {
 }
 
 void beginEspNowAsReceiver(esp_now_recv_cb_t callback) {
+    Serial.print("ESP8266 Board MAC Address:  ");
+    Serial.println(WiFi.macAddress());
     WiFi.mode(WIFI_STA);
     if (esp_now_init() != 0) {
         Serial.println(F("Error initializing ESP-NOW"));

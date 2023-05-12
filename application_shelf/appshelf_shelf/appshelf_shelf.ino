@@ -14,7 +14,7 @@ enum Commands : unsigned char {
 
 constexpr Pin chipSelectPin{5};
 constexpr Pin resetPin{4};
-uint8_t broadcastAddress[]{0xA4, 0xCF, 0x12, 0xD7, 0x37, 0xCB};
+uint8_t broadcastAddress[]{0x7C, 0x87, 0xCE, 0xB5, 0x25, 0x0C};
 
 SimpleRfid rfid{chipSelectPin, resetPin};
 

@@ -30,19 +30,17 @@ void loop() {
 
     switch (rfid.getTokenPresence()) {
         case SimpleRfid::tokenAdded: {
-            auto currentToken{selectTokenById(rfid.getFirstUidByte(), apps)};
+            auto currentToken{lookUpToken(rfid, apps)};
             if (currentToken) {
                 currentToken->tokenInserted();
             } else {
-                AppToken newApp{rfid.getFirstUidByte()};
-                apps.push_back(newApp);
-                Serial.println(F("New object dynamically allocated"));
+                rememberToken(rfid, apps);
                 apps.back().tokenInserted();
             }
             break;
         }
         case SimpleRfid::tokenRemoved: {
-            auto currentToken{selectTokenById(rfid.getFirstUidByte(), apps)};
+            auto currentToken{lookUpToken(rfid, apps)};
             if (currentToken) currentToken->tokenUninserted();
             break;
         }
@@ -51,7 +49,15 @@ void loop() {
     }
 }
 
+AppToken* lookUpToken(SimpleRfid& rfid, vector<AppToken>& apps) {
+    return selectTokenById(rfid.getFirstUidByte(), apps);
+}
 
+void rememberToken(SimpleRfid& rfid, vector<AppToken>& apps) {
+    AppToken newApp{rfid.getFirstUidByte()};
+    apps.push_back(newApp);
+    Serial.println(F("New object dynamically allocated"));
+}
 
 AppToken* selectTokenById(byte id, vector<AppToken>& apps) {
     for (auto& token : apps) {

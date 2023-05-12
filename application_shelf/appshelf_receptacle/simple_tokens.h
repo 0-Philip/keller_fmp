@@ -61,7 +61,7 @@ class AppToken : public SimpleToken {
     void tokenUnshelved() const {
         printName();
         Serial.println(F("/launch"));
-
+        delay(2000);
         printName();
         Serial.println(F("/minmiz"));
     }

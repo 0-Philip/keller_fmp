@@ -45,9 +45,7 @@ class Envelopes with ChangeNotifier {
     notifyListeners();
   }
 
-  void refresh() {
-    notifyListeners();
-  }
+  void refresh() => notifyListeners();
 }
 
 class EnvelopeForFlutter {

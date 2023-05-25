@@ -8,7 +8,7 @@
 PRODUCT_NAME = MailMarch
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.a2i2
+PRODUCT_BUNDLE_IDENTIFIER = nl.philipkellerdesign.a2i2
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 Philip Keller All rights reserved.

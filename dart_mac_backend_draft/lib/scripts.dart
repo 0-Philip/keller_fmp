@@ -1,5 +1,3 @@
-import 'package:dart_mac_backend_draft/envelopes_and_more.dart';
-
 String getMailAccount = '''tell application "Mail"
 	
 	

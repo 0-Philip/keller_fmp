@@ -51,6 +51,9 @@ class Envelopes with ChangeNotifier {
 class EnvelopeForFlutter {
   static String? _senderId;
 
+  String? _rawCc;
+  String? _rawBcc;
+
   static String? get senderId {
     return _senderId;
   }
@@ -59,14 +62,12 @@ class EnvelopeForFlutter {
     _senderId = value?.trim();
   }
 
-  String? _bcc;
-
   String? get bcc {
-    return _bcc;
+    return _rawBcc;
   }
 
   void set bcc(String? bcc) {
-    _bcc = bcc?.trim();
+    _rawBcc = bcc;
   }
 
   String? subject;
@@ -85,18 +86,32 @@ class EnvelopeForFlutter {
     }
   }
 
+  List<String> get ccRecipients {
+    if (_rawCc != null) {
+      return parseField(_rawCc!);
+    } else {
+      return [];
+    }
+  }
+
+  List<String> get bccRecipients {
+    if (_rawBcc != null) {
+      return parseField(_rawBcc!);
+    } else {
+      return [];
+    }
+  }
+
   void set to(String? to) {
     _rawTo = to;
   }
 
-  String? _cc;
-
   String? get cc {
-    return _cc;
+    return _rawCc;
   }
 
   void set cc(String? cc) {
-    _cc = cc?.trim();
+    _rawCc = cc;
   }
 
   List<String> attachments = <String>[];
@@ -110,8 +125,8 @@ class EnvelopeForFlutter {
         senderID: EnvelopeForFlutter.senderId!,
         toRecipients: toRecipients,
         subject: subject!,
-        ccRecipient: cc,
-        bccRecipient: bcc,
+        ccRecipients: ccRecipients,
+        bccRecipients: bccRecipients,
         body: messageBody ?? " ",
         attachmentPaths: attachments,
       );

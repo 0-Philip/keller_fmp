@@ -72,8 +72,8 @@ String sendEmail({
   required String senderID,
   required List<String> toRecipients,
   required String subject,
-  String? ccRecipient,
-  String? bccRecipient,
+  List<String> ccRecipients = const [],
+  List<String> bccRecipients = const [],
   List<String> attachmentPaths = const [],
   String body = " ",
 }) =>
@@ -81,9 +81,9 @@ String sendEmail({
 tell application "Mail"
 		set outgoingMessage to make new outgoing message with properties {visible:false}
 		tell outgoingMessage
-			${addToRecipients(toRecipients)}
-      ${ccRecipient != null ? 'make new cc recipient at end of cc recipients with properties {address:"$ccRecipient"}' : ' '}
-			${bccRecipient != null ? 'make new bcc recipient at end of bcc recipients with properties {address:"$bccRecipient"}' : ' '}
+			${addRecipients(toRecipients, "to")}
+			${addRecipients(ccRecipients, "cc")}
+			${addRecipients(bccRecipients, "bcc")}
 			set sender to "$senderID"
 			set subject to "$subject"
 			set content to "$body"
@@ -99,6 +99,15 @@ String addToRecipients(List<String> toRecipients) {
   for (var recipient in toRecipients) {
     code +=
         '''make new to recipient at end of to recipients with properties {address: "$recipient"} \n''';
+  }
+  return code;
+}
+
+String addRecipients(List<String> toRecipients, String recipientType) {
+  String code = "";
+  for (var recipient in toRecipients) {
+    code +=
+        '''make new $recipientType recipient at end of $recipientType recipients with properties {address: "$recipient"} \n''';
   }
   return code;
 }

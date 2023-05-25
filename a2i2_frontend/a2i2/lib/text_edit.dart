@@ -1,6 +1,7 @@
 import 'package:a2i2/attachment_button.dart';
 import 'package:a2i2/envelopes_flutter.dart';
 import 'package:a2i2/scrollable_text_field.dart';
+import 'package:a2i2/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,16 +15,21 @@ class TextEditor extends StatefulWidget {
 class _TextEditorState extends State<TextEditor> {
   late TextEditingController _toController;
   late TextEditingController _subjectController;
-
+  late TextEditingController _ccController;
+  late TextEditingController _bccController;
   @override
   void initState() {
     super.initState();
     var envelopeManager = context.read<Envelopes>();
     _toController = TextEditingController();
     _subjectController = TextEditingController();
+    _ccController = TextEditingController();
+    _bccController = TextEditingController();
     envelopeManager.addListener(() {
       _toController.text = envelopeManager.activeEnvelope?.to ?? "";
       _subjectController.text = envelopeManager.activeEnvelope?.subject ?? "";
+      _ccController.text = envelopeManager.activeEnvelope?.cc ?? "";
+      _bccController.text = envelopeManager.activeEnvelope?.bcc ?? "";
     });
     _toController.addListener(() {
       envelopeManager.activeEnvelope?.to = _toController.text;
@@ -32,12 +38,22 @@ class _TextEditorState extends State<TextEditor> {
     _subjectController.addListener(() {
       envelopeManager.activeEnvelope?.subject = _subjectController.text;
     });
+
+    _ccController.addListener(() {
+      envelopeManager.activeEnvelope?.cc = _ccController.text;
+    });
+
+    _bccController.addListener(() {
+      envelopeManager.activeEnvelope?.bcc = _bccController.text;
+    });
   }
 
   @override
   void dispose() {
     _toController.dispose();
     _subjectController.dispose();
+    _ccController.dispose();
+    _bccController.dispose();
     super.dispose();
   }
 
@@ -57,37 +73,71 @@ class _TextEditorState extends State<TextEditor> {
                 elevation: 6,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
+                  child: Column(
                     children: [
-                      Expanded(
-                        // To
-                        flex: 3,
-                        child: TextFormField(
-                          controller: _toController,
-                          decoration: const InputDecoration(
-                            label: Text("To: "),
-                            filled: true,
+                      Row(
+                        children: [
+                          Expanded(
+                            // To
+                            flex: 3,
+                            child: TextFormField(
+                              controller: _toController,
+                              decoration: const InputDecoration(
+                                label: Text("To: "),
+                                filled: true,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            //Subject
+                            flex: 2,
+                            child: TextFormField(
+                              controller: _subjectController,
+                              decoration: const InputDecoration(
+                                label: Text("Subject: "),
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          AttachmentButton(),
+                        ],
                       ),
                       const SizedBox(
-                        width: 8,
+                        height: 8,
                       ),
-                      Expanded(
-                        //Subject
-                        flex: 2,
-                        child: TextFormField(
-                          controller: _subjectController,
-                          decoration: const InputDecoration(
-                            label: Text("Subject: "),
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      AttachmentButton()
+                      if (context.watch<ViewModel>().shouldShowCcBcc)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                  controller: _ccController,
+                                  decoration: const InputDecoration(
+                                    label: Text("Cc: "),
+                                    filled: true,
+                                  )),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              //Subject
+
+                              child: TextFormField(
+                                controller: _bccController,
+                                decoration: const InputDecoration(
+                                  label: Text("Bcc: "),
+                                  filled: true,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
                     ],
                   ),
                 ),

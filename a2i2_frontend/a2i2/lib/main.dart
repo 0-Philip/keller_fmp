@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:a2i2/scripts_f.dart';
 import 'package:a2i2/system_menu.dart';
 import 'package:a2i2/text_edit.dart';
+import 'package:a2i2/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,8 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider<Envelopes>(
       create: (context) => Envelopes(),
-      child: const MyApp(),
+      child: ChangeNotifierProvider<ViewModel>(
+          create: (context) => ViewModel(), child: const MyApp()),
     ),
   );
 }

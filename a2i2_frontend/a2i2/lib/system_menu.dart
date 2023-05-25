@@ -1,5 +1,6 @@
 import 'package:a2i2/envelopes_flutter.dart';
 import 'package:a2i2/main.dart';
+import 'package:a2i2/view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ class MailMarchMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var activeEnvelope = context.watch<Envelopes>().activeEnvelope;
+    var viewModel = context.watch<ViewModel>();
     return MaterialApp(
       home: PlatformMenuBar(
         menus: <PlatformMenuItem>[
@@ -52,6 +54,18 @@ class MailMarchMenu extends StatelessWidget {
               ]),
             ],
           ),
+          PlatformMenu(label: "View", menus: [
+            PlatformMenuItemGroup(
+              members: [
+                PlatformMenuItem(
+                  label:
+                      "${viewModel.shouldShowCcBcc ? "Hide" : "Show"} Cc and Bcc Fields",
+                  onSelected: () =>
+                      viewModel.shouldShowCcBcc = !viewModel.shouldShowCcBcc,
+                ),
+              ],
+            ),
+          ])
         ],
         child: child,
       ),

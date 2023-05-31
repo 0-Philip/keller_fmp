@@ -1,11 +1,13 @@
 #include <ESP8266WiFi.h>
 #include <SPI.h>
 #include <espnow.h>
+#include <array>
 
 #include "simple_rfid.h"
 // #include "simple_tokens.h"
 
 using Pin = int;
+using MacAdress = std::array<byte, 6>;
 
 enum Commands : unsigned char {
     shelved = 's',
@@ -14,7 +16,7 @@ enum Commands : unsigned char {
 
 constexpr Pin chipSelectPin{5};
 constexpr Pin resetPin{4};
-uint8_t broadcastAddress[]{0x7C, 0x87, 0xCE, 0xB5, 0x25, 0x0C};
+constexpr MacAdress broadcastAddress{0x7C, 0x87, 0xCE, 0xB5, 0x99, 0x8C};
 
 SimpleRfid rfid{chipSelectPin, resetPin};
 
@@ -52,12 +54,13 @@ void loop() {
     }
 }
 
-void sendCommandString(byte* adress, const unsigned char appId, const Commands command) {
+void sendCommandString(MacAdress const& adress, const unsigned char appId, const Commands command) {
     unsigned char commandString[] = {appId, command};
-    esp_now_send(adress, commandString, sizeof(commandString));
+    MacAdress adressMutableCopy = adress;
+    esp_now_send(adressMutableCopy.data(), commandString, sizeof(commandString));
 }
 
-void beginEspNowAsSenderTo(byte receiverAdress[], esp_now_send_cb_t callback) {
+void beginEspNowAsSenderTo(MacAdress const& receiverAdress, esp_now_send_cb_t callback) {
     WiFi.mode(WIFI_STA);
     if (esp_now_init() != 0) {
         Serial.println("Error initializing ESP-NOW");
@@ -67,8 +70,9 @@ void beginEspNowAsSenderTo(byte receiverAdress[], esp_now_send_cb_t callback) {
     esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
     esp_now_register_send_cb(callback);
 
+    MacAdress adressMutableCopy = receiverAdress; //esp now api needs the address to be mutable 🤷🏻‍♂️
     constexpr int channel{1};
     constexpr byte* key{nullptr};
     constexpr int keyLength{0};
-    esp_now_add_peer(receiverAdress, ESP_NOW_ROLE_SLAVE, channel, key, keyLength);
+    esp_now_add_peer(adressMutableCopy.data(), ESP_NOW_ROLE_SLAVE, channel, key, keyLength);
 }

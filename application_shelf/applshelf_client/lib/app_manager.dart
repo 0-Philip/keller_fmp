@@ -15,7 +15,10 @@ class AppManager {
 
   final _appName = "Microsoft Word";
 
-  void launch() => scripts.launch(_appName);
+  void launch() {
+    scripts.launch(_appName);
+    Future.delayed(Duration(seconds: 1), minimize);
+  }
 
   void quit() => scripts.quit(_appName);
 

@@ -1,2 +1,3 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+# AppShelf commandline client
+This commandline program allows for opening, closing, and minimizing
+of the Microsoft Word on MacOS when a specific peripheral is connected to a hard-coded serial port

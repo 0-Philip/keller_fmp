@@ -14,7 +14,7 @@ class MailMarchMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var activeEnvelope = context.watch<Envelopes>().activeEnvelope;
+    var activeEnvelope = context.watch<EnvelopeManager>().activeEnvelope;
     var viewModel = context.watch<ViewModel>();
     return MaterialApp(
       home: PlatformMenuBar(
@@ -33,7 +33,7 @@ class MailMarchMenu extends StatelessWidget {
               onSelected: (activeEnvelope?.attachments.isNotEmpty ?? false)
                   ? () {
                       activeEnvelope?.attachments = [];
-                      context.read<Envelopes>().refresh();
+                      context.read<EnvelopeManager>().refresh();
                     }
                   : null,
             ),

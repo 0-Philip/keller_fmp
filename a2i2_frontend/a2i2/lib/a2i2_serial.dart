@@ -31,7 +31,8 @@ SerialPortReader getSerialConnection({
   return SerialPortReader(port);
 }
 
-void Function(Uint8List) getDataProcessCallback(Envelopes envelopeManager) {
+void Function(Uint8List) getDataProcessCallback(
+    EnvelopeManager envelopeManager) {
   return (Uint8List event) {
     final text = String.fromCharCodes(event);
     final regex = RegExp(r'(.*?)/?([a-z]+)');

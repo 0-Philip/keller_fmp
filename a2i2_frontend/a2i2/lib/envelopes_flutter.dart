@@ -4,7 +4,7 @@ import 'package:a2i2/parse_fields.dart';
 import 'package:a2i2/scripts_f.dart';
 import 'package:flutter/widgets.dart';
 
-class Envelopes with ChangeNotifier {
+class EnvelopeManager with ChangeNotifier {
   EnvelopeForFlutter? activeEnvelope;
   final Map<String, EnvelopeForFlutter> _drafts = {};
 

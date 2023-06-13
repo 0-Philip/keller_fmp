@@ -20,7 +20,7 @@ class _TextEditorState extends State<TextEditor> {
   @override
   void initState() {
     super.initState();
-    var envelopeManager = context.read<Envelopes>();
+    var envelopeManager = context.read<EnvelopeManager>();
     _toController = TextEditingController();
     _subjectController = TextEditingController();
     _ccController = TextEditingController();

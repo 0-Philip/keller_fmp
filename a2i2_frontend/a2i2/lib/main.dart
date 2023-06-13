@@ -18,8 +18,8 @@ Future<void> main() async {
   Window.makeTitlebarTransparent();
   Window.enableFullSizeContentView();
   runApp(
-    ChangeNotifierProvider<Envelopes>(
-      create: (context) => Envelopes(),
+    ChangeNotifierProvider<EnvelopeManager>(
+      create: (context) => EnvelopeManager(),
       child: ChangeNotifierProvider<ViewModel>(
           create: (context) => ViewModel(), child: const MyApp()),
     ),
@@ -52,13 +52,13 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     getSerialConnection(portContains: 'usbserial')
         .stream
-        .listen(getDataProcessCallback(context.read<Envelopes>()));
+        .listen(getDataProcessCallback(context.read<EnvelopeManager>()));
     chooseMailAccount(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    var currentEnvelope = context.watch<Envelopes>().activeEnvelope;
+    var currentEnvelope = context.watch<EnvelopeManager>().activeEnvelope;
 
     return Stack(
       alignment: AlignmentDirectional.center,
@@ -84,6 +84,6 @@ void chooseMailAccount(BuildContext context) {
   Process.run('osascript', ['-e', getMailAccount]).then((p) {
     EnvelopeForFlutter.senderId = p.stdout;
     print(EnvelopeForFlutter.senderId);
-    context.read<Envelopes>().refresh();
+    context.read<EnvelopeManager>().refresh();
   });
 }

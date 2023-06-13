@@ -17,7 +17,7 @@ class _ScrollableTextFieldState extends State<ScrollableTextField> {
   @override
   void initState() {
     super.initState();
-    var envelopeManager = context.read<Envelopes>();
+    var envelopeManager = context.read<EnvelopeManager>();
 
     _bodyController = TextEditingController();
     envelopeManager.addListener(() {

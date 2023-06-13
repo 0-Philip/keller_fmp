@@ -19,14 +19,15 @@ class _AttachmentButtonState extends State<AttachmentButton> {
     setState(() {
       _isActive = true;
     });
-    var attachments = context.read<Envelopes>().activeEnvelope?.attachments;
+    var attachments =
+        context.read<EnvelopeManager>().activeEnvelope?.attachments;
 
     var paths = pickerResult?.paths.where((i) => i != null).toList();
 
     if (attachments != null) {
       paths?.forEach((path) {
         attachments.add(path!);
-        context.read<Envelopes>().refresh();
+        context.read<EnvelopeManager>().refresh();
       });
     }
   }
@@ -34,7 +35,7 @@ class _AttachmentButtonState extends State<AttachmentButton> {
   @override
   Widget build(BuildContext context) {
     final attachmentCount =
-        context.watch<Envelopes>().activeEnvelope?.attachments.length;
+        context.watch<EnvelopeManager>().activeEnvelope?.attachments.length;
     return Badge(
       alignment: AlignmentDirectional(35, 0),
       label: Text(attachmentCount.toString()),

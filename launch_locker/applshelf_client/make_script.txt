@@ -1,0 +1,1 @@
+a2i2_mail_dart % dart compile exe --define=LIBSERIALPORT_PATH=libserialport.dylib applshelf_client.dart   

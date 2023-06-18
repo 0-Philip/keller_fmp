@@ -1,5 +1,6 @@
 {
-    "board": "arduino:avr:micro",
-    "sketch": "power_press/out_of_reach_button/out_of_reach_button.ino",
-    "port": "/dev/tty.usbserial-110"
+    "board": "esp8266:esp8266:d1_mini",
+    "sketch": "mail_march/receptacle_fmp/receptacle_fmp.ino",
+    "port": "/dev/tty.usbserial-110",
+    "configuration": "xtal=80,vt=flash,exception=disabled,stacksmash=disabled,ssl=all,mmu=3232,non32xfer=fast,eesz=4M2M,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=921600"
 }

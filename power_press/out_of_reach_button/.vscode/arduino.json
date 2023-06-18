@@ -1,0 +1,5 @@
+{
+    "board": "arduino:avr:micro",
+    "sketch": "out_of_reach_button.ino",
+    "port": "/dev/tty.usbmodemHIDPC1"
+}

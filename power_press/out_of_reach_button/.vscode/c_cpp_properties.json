@@ -16,16 +16,16 @@
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/cores/arduino",
-                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/variants/micro",
+                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino",
+                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.6/variants/micro",
                 "/Users/philip/Documents/Arduino/libraries/Keyboard/src",
-                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/libraries/HID/src",
+                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.6/libraries/HID/src",
                 "/Users/philip/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/lib/gcc/avr/7.3.0/include",
                 "/Users/philip/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/lib/gcc/avr/7.3.0/include-fixed",
                 "/Users/philip/Library/Arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include"
             ],
             "forcedInclude": [
-                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.5/cores/arduino/Arduino.h"
+                "/Users/philip/Library/Arduino15/packages/arduino/hardware/avr/1.8.6/cores/arduino/Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",

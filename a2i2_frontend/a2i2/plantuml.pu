@@ -1,6 +1,13 @@
 @startuml
 set namespaceSeparator ::
 
+class "a2i2::view_model.dart::ViewModel" {
+  -bool _shouldShowCcBcc
+  +bool shouldShowCcBcc
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "a2i2::view_model.dart::ViewModel"
+
 class "a2i2::main.dart::MyApp" {
   +Widget build()
 }
@@ -37,16 +44,19 @@ class "a2i2::envelopes_flutter.dart::Envelopes" {
 
 class "a2i2::envelopes_flutter.dart::EnvelopeForFlutter" {
   {static} -String? _senderId
-  -String? _bcc
+  -String? _rawCc
+  -String? _rawBcc
   +String? subject
-  -String? _to
-  -String? _cc
+  -String? _rawTo
   +List<String> attachments
   +String fileName
   +String? messageBody
   {static} +String? senderId
   +String? bcc
   +String? to
+  +List<String> toRecipients
+  +List<String> ccRecipients
+  +List<String> bccRecipients
   +String? cc
   -void _send()
 }
@@ -98,6 +108,131 @@ class "a2i2::text_edit.dart::TextEditor" {
 class "a2i2::text_edit.dart::_TextEditorState" {
   -TextEditingController _toController
   -TextEditingController _subjectController
+  -TextEditingController _ccController
+  -TextEditingController _bccController
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"a2i2::text_edit.dart::_TextEditorState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "a2i2::text_edit.dart::_TextEditorState"
+
+
+@enduml
+(base) philip@wlan-159122 a2i2 % flutter pub global run dcdg
+@startuml
+set namespaceSeparator ::
+
+class "a2i2::view_model.dart::ViewModel" {
+  -bool _shouldShowCcBcc
+  +bool shouldShowCcBcc
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "a2i2::view_model.dart::ViewModel"
+
+class "a2i2::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "a2i2::main.dart::MyApp"
+
+class "a2i2::main.dart::MyHomePage" {
+  +String title
+  +State<MyHomePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "a2i2::main.dart::MyHomePage"
+
+class "a2i2::main.dart::_MyHomePageState" {
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "a2i2::main.dart::_MyHomePageState"
+
+class "a2i2::envelopes_flutter.dart::EnvelopeManager" {
+  +EnvelopeForFlutter? activeEnvelope
+  -Map<String, EnvelopeForFlutter> _drafts
+  +void execute()
+  +void create()
+  +void close()
+  +void send()
+  +void reopen()
+  +void refresh()
+}
+
+"a2i2::envelopes_flutter.dart::EnvelopeManager" o-- "a2i2::envelopes_flutter.dart::EnvelopeForFlutter"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "a2i2::envelopes_flutter.dart::EnvelopeManager"
+
+class "a2i2::envelopes_flutter.dart::EnvelopeForFlutter" {
+  {static} -String? _senderId
+  -String? _rawCc
+  -String? _rawBcc
+  +String? subject
+  -String? _rawTo
+  +List<String> attachments
+  +String fileName
+  +String? messageBody
+  {static} +String? senderId
+  +String? bcc
+  +String? to
+  +List<String> toRecipients
+  +List<String> ccRecipients
+  +List<String> bccRecipients
+  +String? cc
+  -void _send()
+}
+
+class "a2i2::attachment_button.dart::AttachmentButton" {
+  +State<AttachmentButton> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "a2i2::attachment_button.dart::AttachmentButton"
+
+class "a2i2::attachment_button.dart::_AttachmentButtonState" {
+  -bool _isActive
+  -void _whenFilesPicked()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "a2i2::attachment_button.dart::_AttachmentButtonState"
+
+class "a2i2::system_menu.dart::MailMarchMenu" {
+  +Widget? child
+  +Widget build()
+}
+
+"a2i2::system_menu.dart::MailMarchMenu" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "a2i2::system_menu.dart::MailMarchMenu"
+
+class "a2i2::scrollable_text_field.dart::ScrollableTextField" {
+  +State<ScrollableTextField> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "a2i2::scrollable_text_field.dart::ScrollableTextField"
+
+class "a2i2::scrollable_text_field.dart::_ScrollableTextFieldState" {
+  -TextEditingController _bodyController
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"a2i2::scrollable_text_field.dart::_ScrollableTextFieldState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "a2i2::scrollable_text_field.dart::_ScrollableTextFieldState"
+
+class "a2i2::text_edit.dart::TextEditor" {
+  +State<TextEditor> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "a2i2::text_edit.dart::TextEditor"
+
+class "a2i2::text_edit.dart::_TextEditorState" {
+  -TextEditingController _toController
+  -TextEditingController _subjectController
+  -TextEditingController _ccController
+  -TextEditingController _bccController
   +void initState()
   +void dispose()
   +Widget build()

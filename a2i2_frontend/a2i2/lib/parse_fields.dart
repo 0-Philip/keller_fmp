@@ -15,7 +15,7 @@ List<String> separateAdresses(final String stringWithSeparators) {
 }
 
 bool containsSeparators(final String maybeHasSeparators) {
-  return maybeHasSeparators.contains(RegExp(r'[,;]')) ? true : false;
+  return maybeHasSeparators.contains(RegExp(r'[,;]'));
 }
 
 List<String> parseField(final String inputString) {

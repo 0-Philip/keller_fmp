@@ -116,7 +116,6 @@ class EnvelopeForFlutter {
 
   List<String> attachments = <String>[];
   EnvelopeForFlutter();
-  late final String fileName;
   String? messageBody;
 
   void _send() async {

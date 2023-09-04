@@ -3,6 +3,9 @@ This repository contains and documents the software components of my master grad
 at the department of Industrial Design at Eindhoven University of Technology.
 
 ## About the project
+
+![Project stand of demoday, featuring posters, prototypes, and a laptop](https://raw.githubusercontent.com/0-Philip/keller_fmp/main/media/demoday_stand.png)
+
 Office work often involves unhealthy amounts of sitting. Most computer interfaces perpetuate this behaviour. 
 This project investigates the impact of physically active interfaces in the office environment. 
 A prototype capable of long-term situated use elicits opportunities and obstacles, while lower fidelity 
